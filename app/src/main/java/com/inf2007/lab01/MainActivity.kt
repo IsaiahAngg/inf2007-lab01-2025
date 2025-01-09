@@ -1,6 +1,7 @@
 package com.inf2007.lab01
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -49,13 +50,18 @@ fun MainScreen() {
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 UserInput(
-                    name = name,
-                    onNameChange = { name = it }
+                    name = username,
+                    onNameChange = { username = it },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .testTag("nameInput")
                 )
 
                 Button(
                     onClick = {
                         if (username.isNotBlank()) {
+                            showGreeting = true
+                        } else {
                             showGreeting = false
                         }
                     },
@@ -67,11 +73,12 @@ fun MainScreen() {
                 }
 
                 if (showGreeting) {
-                    Greeeting(
+                    Greeting(
                         name = username,
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(top = 16.dp)
+                            .testTag("greetingMsg")
                     )
 
                 }
@@ -95,10 +102,10 @@ fun UserInput(name: String, onNameChange: (String) -> Unit, modifier: Modifier =
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
     Text(
-        text = "Hello $username!, Welcome to InF2007!",
+        text = "Hello $name!, Welcome to INF2007!",
         modifier = Modifier
             .fillMaxWidth()
-            .testTag("greeting")
+            .testTag("greetingMsg")
     )
 }
 
